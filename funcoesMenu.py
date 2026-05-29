@@ -1,9 +1,12 @@
 def menu ():
     print("""Menu opções
     1- Informações
-    2
-    3""")
-
+    2- Calcular NVDI
+    3- Previsão de queimadas
+    4-
+    5-
+    0-
+    """)
 
 
 def login ():
@@ -12,7 +15,6 @@ def login ():
     email = input("Insira seu email: ")
     senha = input("Insira sua senha: ")
     return email, senha
-
 
 
 def loginValidacao (nome, senha):
