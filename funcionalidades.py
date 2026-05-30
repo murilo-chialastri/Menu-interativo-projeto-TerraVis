@@ -136,16 +136,16 @@ def chancesDeQueimada(temperatura, vento, umidade):
 
 def classificacao(indice):
     if indice <= 0.29:
-        risco = "Risco baixo (Condições normais)"
+        risco = "Risco baixo (Sem necessidade de atenção)"
         return risco
     elif indice <= 0.54:
-        risco = " Risco moderado (Atenção recomendada)"
+        risco = "Risco moderado (Condições normais)"
         return risco
     elif indice <= 0.74:
-        risco = " Risco moderado (Atenção recomendada)"
+        risco = "Risco alto (Atenção recomendada)"
         return risco
     else:
-        risco = "  Risco crítico (Emergência)"
+        risco = "Risco crítico (Emergência)"
         return risco
 
 def prevQueimada():
@@ -155,3 +155,84 @@ def prevQueimada():
     indice = chancesDeQueimada(temp, vento, umidade)
     clas = classificacao(indice)
     return clas
+
+#_________________________________________________________________________
+# 4- ENCHENTES
+
+def nivelDoRio():
+    nivel = float(input("Informe a nivel do Rio em metros: "))
+
+    if nivel > 0 and nivel <= 10 :
+
+        if nivel <= 3:
+            aviso = "Normal"
+
+        elif nivel > 3 and nivel <= 4.5:
+            aviso = "Atencao — monitorar"
+
+        elif nivel > 4.5 and nivel <= 6.0:
+            aviso = "Alerta — risco de alagamento"
+
+        else:
+            aviso = "Emergencia — evacuacao indicada"
+
+        return nivel, aviso
+    else:
+
+        return None
+
+def precipitacao(nivelAtual):
+    prec = int(input("Informe a precipitação prevista nas próximas 24h (mm): "))
+    if prec >= 0 and prec <= 400 and nivelAtual != None:
+        prevFinal = nivelAtual + (prec / 10) * 0.3
+        if prevFinal <= 3:
+            aviso = "Normal"
+
+        elif prevFinal > 3 and prevFinal <= 4.5:
+            aviso = "Atencao — monitorar"
+
+        elif prevFinal > 4.5 and prevFinal <= 6.0:
+            aviso = "Alerta — risco de alagamento"
+
+        else:
+            aviso = "Emergencia — evacuacao indicada"
+        return prec, aviso, prevFinal
+    else:
+
+        return None
+
+def riscoEnchentes():
+    nivelEAviso = nivelDoRio() #Guarda a lista [nivel, aviso]
+    if nivelEAviso != None:
+        nivelAtual = nivelEAviso[0]
+        avisoAtual = nivelEAviso[1]
+        precipitacoes = precipitacao(nivelAtual) #Guarda a lista [precipitação, aviso, nivelFinal]
+        if precipitacoes != None:
+            precip = precipitacoes[0]
+            avisoFinal = precipitacoes[1]
+            nivelFinal = precipitacoes[2]
+
+            if len(avisoAtual) < len(avisoFinal): #Quanto pior a situação, mais caracteres tem na mensagem, isso serve como um "nível de risco"
+                situacao = "[!] Atencao: a situacao vai piorar nas proximas 24 horas."
+            else:
+                situacao = "[ok] Situacao estavel. Sem mudancas previstas."
+
+            status = f"""\n== Situacao atual ==
+        Nivel do rio: {nivelAtual:.1f}m
+        Status: {avisoAtual}
+        
+        == Projecao para as proximas 24h ==
+        Precipitacao prevista: {precip}mm
+        Nivel projetado: {nivelFinal:.1f}m
+        Status: {avisoFinal}
+        
+        {situacao}"""
+            return status
+        else:
+            print("A precipitação não foi informada corretamente!")
+            return None
+    else:
+        print("O nível do rio não foi imformado corretamente!")
+        return None
+#_________________________________________________________________________
+# 5- JANELA DE PLANTIO

@@ -1,5 +1,5 @@
 import funcionalidades
-from funcionalidades import prevQueimada
 
-o = prevQueimada()
+
+o = funcionalidades.riscoEnchentes()
 print(o)

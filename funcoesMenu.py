@@ -3,9 +3,9 @@ def menu ():
     1- Informações
     2- Calcular NVDI
     3- Previsão de queimadas
-    4-
+    4- Previsão de enchentes
     5-
-    0-
+    0- Sair
     """)
 
 
