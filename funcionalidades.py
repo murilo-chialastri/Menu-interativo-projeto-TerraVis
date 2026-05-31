@@ -275,4 +275,59 @@ janelas = {   #dicionário para busca eficiente de valores, a escolha do diciona
     },
 }
 
-def informacoes():
+def infoDePlantio():
+    while True:
+        cultivo = int(input("Selecione o plantio\n"
+                            "1- Soja\n"
+                            "2- Milho\n"
+                            "3- Trigo\n"
+                            "4- Feijão\n"
+                            "5- Algodao\n"))
+        if cultivo == 1:
+            plant = "soja"
+            break
+        elif cultivo == 2:
+            plant = "milho"
+            break
+        elif cultivo == 3:
+            plant = "trigo"
+            break
+        elif cultivo == 4:
+            plant = "feijao"
+            break
+        elif cultivo == 5:
+            plant = "algodao"
+            break
+        else:
+            print("Opção inválida")
+    return plant
+
+
+def infoRegiao():
+    while True:
+        reg = int(input("Selecione a região\n"
+                        "1- Sul\n"
+                        "2- Sudeste\n"
+                        "3- Centro-oeste\n"
+                        "4- Nordeste\n"
+                        "5- Norte\n"))
+        if reg == 1:
+            regiao = "sul"
+            break
+        elif reg == 2:
+            regiao = "sudeste"
+            break
+        elif reg == 3:
+            regiao = "centro-oeste"
+            break
+        elif reg == 4:
+            regiao = "nordeste"
+            break
+        elif reg == 5:
+            regiao = "norte"
+            break
+        else:
+            print("Opcço inválida")
+    return regiao
+
+
