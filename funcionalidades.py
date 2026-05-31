@@ -236,3 +236,43 @@ def riscoEnchentes():
         return None
 #_________________________________________________________________________
 # 5- JANELA DE PLANTIO
+
+janelas = {   #dicionário para busca eficiente de valores, a escolha do dicionario para esse tipo de função é necessaria para otimizar o código
+    "soja": {
+        "sul":          [10, 11, 12, 1],
+        "sudeste":      [10, 11, 12],
+        "centro-oeste": [10, 11, 12],
+        "nordeste":     [11, 12, 1],
+        "norte":        [11, 12, 1],
+    },
+    "milho": {
+        "sul":          [9, 10, 11, 12],
+        "sudeste":      [9, 10, 11],
+        "centro-oeste": [9, 10, 11],
+        "nordeste":     [4, 5, 6],
+        "norte":        [4, 5, 6],
+    },
+    "trigo": {
+        "sul":          [4, 5, 6],
+        "sudeste":      [4, 5],
+        "centro-oeste": [],
+        "nordeste":     [],
+        "norte":        [],
+    },
+    "feijao": {
+        "sul":          [9, 10, 11],
+        "sudeste":      [8, 9, 10],
+        "centro-oeste": [8, 9, 10],
+        "nordeste":     [3, 4, 5],
+        "norte":        [3, 4, 5],
+    },
+    "algodao": {
+        "sul":          [],
+        "sudeste":      [10, 11],
+        "centro-oeste": [10, 11],
+        "nordeste":     [1, 2, 3],
+        "norte":        [1, 2, 3],
+    },
+}
+
+def informacoes():
