@@ -1,19 +1,31 @@
 # 1- INFO
 def informacoes():
-    print("""\nTerraVis: plataforma de monitoramento orbital para o campo brasileiro.
-Monitora saúde de lavouras (NDVI), risco de queimadas, enchentes
-e janela ideal de plantio usando dados de satelites publicos.
-Desenvolvido como prototipo academico pela equipe — FIAP 2026\n""")
+    print("""
+╔══════════════════════════════════════════════════════╗
+║               SOBRE O TERRAVIS                       ║
+╠══════════════════════════════════════════════════════╣
+║  TerraVis e uma plataforma de monitoramento orbital  ║
+║  voltada ao campo brasileiro. Usando dados de        ║
+║  satelites publicos, o sistema monitora a saude de   ║
+║  lavouras, risco de queimadas, enchentes e indica    ║
+║  a janela ideal de plantio para o produtor rural.    ║
+╚══════════════════════════════════════════════════════╝
+""")
 
 #_________________________________________________________________________
 # 2- NVDI
 def menuNdvi():
-    print("""Como esta sua lavoura atualmente?
-1 - Plantio recente (solo ainda exposto)
-2 - Crescimento inicial
-3 - Desenvolvimento pleno
-4 - Proximo da colheita
-5 - Seca / estresse hidrico""")
+    print("""
+╔══════════════════════════════════╗
+║       ESTADO DA LAVOURA          ║
+╠══════════════════════════════════╣
+║  [1]  Plantio recente            ║
+║  [2]  Crescimento inicial        ║
+║  [3]  Desenvolvimento pleno      ║
+║  [4]  Proximo da colheita        ║
+║  [5]  Seca / estresse hidrico    ║
+╚══════════════════════════════════╝
+""")
 
 def escolhaDeTalhao():
     talhao = input("nome do talhão: ")
@@ -21,52 +33,53 @@ def escolhaDeTalhao():
 
 def opcaoNdvi():
     talhao = escolhaDeTalhao()
-    menuNdvi()
-    opc = int(input("Opção: "))
-    match opc:
-        case 1:
-            estado = "Plantio recente (solo ainda exposto)"
-            red = 0.15
-            nir = 0.10
-            res = calculoNvdi(red, nir)
-            nvdi = res[0]
-            alerta = res[1]
-            return red, nir, nvdi, alerta, estado, talhao
-        case 2:
-            estado = "Crescimento inicial"
-            red = 0.12
-            nir = 0.25
-            res = calculoNvdi(red, nir)
-            nvdi = res[0]
-            alerta = res[1]
-            return red, nir, nvdi, alerta, estado, talhao
-        case 3:
-            estado = "Desenvolvimento pleno"
-            red = 0.07
-            nir = 0.48
-            res = calculoNvdi(red, nir)
-            nvdi = res[0]
-            alerta = res[1]
-            return red, nir, nvdi, alerta, estado, talhao
-        case 4:
-            estado = "Proximo da colheita"
-            red = 0.10
-            nir = 0.38
-            res = calculoNvdi(red, nir)
-            nvdi = res[0]
-            alerta = res[1]
-            return red, nir, nvdi, alerta, estado, talhao
-        case 5:
-            estado = "Seca / estresse hidrico"
-            red = 0.25
-            nir = 0.18
-            res = calculoNvdi(red,nir)
-            nvdi = res[0]
-            alerta = res[1]
-            return red, nir, nvdi, alerta, estado, talhao
-        case _:
-            print("Opção inválida!")
-            return None
+    while True:
+        menuNdvi()
+        opc = int(input("Opção: "))
+        match opc:
+            case 1:
+                estado = "Plantio recente (solo ainda exposto)"
+                red = 0.15
+                nir = 0.10
+                res = calculoNvdi(red, nir)
+                nvdi = res[0]
+                alerta = res[1]
+                return red, nir, nvdi, alerta, estado, talhao
+            case 2:
+                estado = "Crescimento inicial"
+                red = 0.12
+                nir = 0.25
+                res = calculoNvdi(red, nir)
+                nvdi = res[0]
+                alerta = res[1]
+                return red, nir, nvdi, alerta, estado, talhao
+            case 3:
+                estado = "Desenvolvimento pleno"
+                red = 0.07
+                nir = 0.48
+                res = calculoNvdi(red, nir)
+                nvdi = res[0]
+                alerta = res[1]
+                return red, nir, nvdi, alerta, estado, talhao
+            case 4:
+                estado = "Proximo da colheita"
+                red = 0.10
+                nir = 0.38
+                res = calculoNvdi(red, nir)
+                nvdi = res[0]
+                alerta = res[1]
+                return red, nir, nvdi, alerta, estado, talhao
+            case 5:
+                estado = "Seca / estresse hidrico"
+                red = 0.25
+                nir = 0.18
+                res = calculoNvdi(red,nir)
+                nvdi = res[0]
+                alerta = res[1]
+                return red, nir, nvdi, alerta, estado, talhao
+            case _:
+                print("Opção inválida!")
+
 
 def calculoNvdi(red, nir):
     # (NIR - RED) / (NIR + RED)
@@ -93,46 +106,49 @@ NDVI calculado: {nvdi:.2f}
 
 STATUS: {alerta}\n"""
     return resultado
+
+def calcular():
+    res = opcaoNdvi()
+    dados = dadosNvdi(res[0], res[1], res[2], res[3], res[4], res[5])
+    return dados
 #_________________________________________________________________________
 # 3- QUEIMADA
 
 def temperatura():
-    menu = """Informe a temperatura atual da regiao (°C):"""
-    temp = int(input(menu))
-    if temp >= 0 and temp <= 60:
-        return temp
-    else:
-        print("Temperatura inválida!\n A temperatura deve ser entre 0 e 60.")
-        return None
+    while True:
+        menu = """Informe a temperatura atual da regiao (°C): """
+        temp = int(input(menu))
+        if temp >= 0 and temp <= 60:
+            return temp
+        else:
+            print("Temperatura inválida!\n A temperatura deve ser entre 0 e 60.")
+
 
 def velocidadeVento():
-    menu = """Informe a intensidade do vento (km/h)"""
-    vento = int(input(menu))
-    if vento > 0 and vento <= 120:
-        return vento
-    else:
-        print("Vento inválido!\n O vento deve ser entre 0 e 120")
-        return None
+    while True:
+        menu = """Informe a intensidade do vento (km/h): """
+        vento = int(input(menu))
+        if vento > 0 and vento <= 120:
+            return vento
+        else:
+            print("Vento inválido!\n O vento deve ser entre 0 e 120")
 
 def umidadeRelativa():
-    menu = """Informe a umidade do ar (%)"""
-    umidade = int(input(menu))
-    if umidade >= 0 and umidade <= 100:
-        return umidade
-    else:
-        print("Umidade inválida!\n A umidade deve ser entre 0 e 100")
-        return None
+    while True:
+        menu = """Informe a umidade do ar (%): """
+        umidade = int(input(menu))
+        if umidade >= 0 and umidade <= 100:
+            return umidade
+        else:
+            print("Umidade inválida!\n A umidade deve ser entre 0 e 100")
+
 
 def chancesDeQueimada(temperatura, vento, umidade):
-    if temperatura == None or vento == None or umidade == None:
-        print("Dados inválidos!")
-        return 0
-    else:
-        fatorTemp = temperatura / 50
-        fatorUmidade = (100 - umidade) / 100
-        fatorVento = vento / 100
-        indice = (fatorTemp * 0.35) + (fatorUmidade * 0.45) + (fatorVento * 0.20)
-        return indice
+    fatorTemp = temperatura / 50
+    fatorUmidade = (100 - umidade) / 100
+    fatorVento = vento / 100
+    indice = (fatorTemp * 0.35) + (fatorUmidade * 0.45) + (fatorVento * 0.20)
+    return indice
 
 def classificacao(indice):
     if indice <= 0.29:
@@ -163,46 +179,47 @@ def prevQueimada():
 # 4- ENCHENTES
 
 def nivelDoRio():
-    nivel = float(input("Informe a nivel do Rio em metros: "))
+    while True:
+        nivel = float(input("Informe a nivel do Rio em metros: "))
 
-    if nivel > 0 and nivel <= 10 :
+        if nivel >= 0 and nivel <= 10 :
 
-        if nivel <= 3:
-            aviso = "Normal"
+            if nivel <= 3:
+                aviso = "Normal"
 
-        elif nivel > 3 and nivel <= 4.5:
-            aviso = "Atencao — monitorar"
+            elif nivel > 3 and nivel <= 4.5:
+                aviso = "Atencao — monitorar"
 
-        elif nivel > 4.5 and nivel <= 6.0:
-            aviso = "Alerta — risco de alagamento"
+            elif nivel > 4.5 and nivel <= 6.0:
+                aviso = "Alerta — risco de alagamento"
 
+            else:
+                aviso = "Emergencia — evacuacao indicada"
+
+            return nivel, aviso
         else:
-            aviso = "Emergencia — evacuacao indicada"
-
-        return nivel, aviso
-    else:
-
-        return None
+            print("Valor inválido!")
 
 def precipitacao(nivelAtual):
-    prec = int(input("Informe a precipitação prevista nas próximas 24h (mm): "))
-    if prec >= 0 and prec <= 400 and nivelAtual != None:
-        prevFinal = nivelAtual + (prec / 10) * 0.3
-        if prevFinal <= 3:
-            aviso = "Normal"
+    while True:
+        prec = int(input("Informe a precipitação prevista nas próximas 24h (mm): "))
+        if prec >= 0 and prec <= 400 and nivelAtual != None:
+            prevFinal = nivelAtual + (prec / 10) * 0.3
+            if prevFinal <= 3:
+                aviso = "Normal"
 
-        elif prevFinal > 3 and prevFinal <= 4.5:
-            aviso = "Atencao — monitorar"
+            elif prevFinal > 3 and prevFinal <= 4.5:
+                aviso = "Atencao — monitorar"
 
-        elif prevFinal > 4.5 and prevFinal <= 6.0:
-            aviso = "Alerta — risco de alagamento"
+            elif prevFinal > 4.5 and prevFinal <= 6.0:
+                aviso = "Alerta — risco de alagamento"
 
+            else:
+                aviso = "Emergencia — evacuacao indicada"
+            return prec, aviso, prevFinal
         else:
-            aviso = "Emergencia — evacuacao indicada"
-        return prec, aviso, prevFinal
-    else:
+            print("Valor inválido!")
 
-        return None
 
 def riscoEnchentes():
     nivelEAviso = nivelDoRio() #Guarda a lista [nivel, aviso]
@@ -296,12 +313,17 @@ mesesNomes = {
 
 def infoDePlantio():
     while True:
-        cultivo = int(input("Selecione o plantio\n"
-                            "1- Soja\n"
-                            "2- Milho\n"
-                            "3- Trigo\n"
-                            "4- Feijão\n"
-                            "5- Algodao\n"))
+        cultivo = int(input("""
+╔══════════════════════════════════╗
+║       SELECIONE O PLANTIO        ║
+╠══════════════════════════════════╣
+║  [1]  Soja                       ║
+║  [2]  Milho                      ║
+║  [3]  Trigo                      ║
+║  [4]  Feijao                     ║
+║  [5]  Algodao                    ║
+╚══════════════════════════════════╝
+"""))
         if cultivo == 1:
             plant = "soja"
             return plant
@@ -329,12 +351,17 @@ def infoDePlantio():
 
 def infoRegiao():
     while True:
-        reg = int(input("Selecione a região\n"
-                        "1- Sul\n"
-                        "2- Sudeste\n"
-                        "3- Centro-oeste\n"
-                        "4- Nordeste\n"
-                        "5- Norte\n"))
+        reg = int(input("""
+╔══════════════════════════════════╗
+║        SELECIONE A REGIÃO        ║
+╠══════════════════════════════════╣
+║  [1]  Sul                        ║
+║  [2]  Sudeste                    ║
+║  [3]  Centro-Oeste               ║
+║  [4]  Nordeste                   ║
+║  [5]  Norte                      ║
+╚══════════════════════════════════╝
+"""))
         if reg == 1:
             regiao = "sul"
             break

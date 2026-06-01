@@ -1,19 +1,39 @@
 def menu ():
-    print("""Menu opções
-    1- Informações
-    2- Calcular NVDI
-    3- Previsão de queimadas
-    4- Previsão de enchentes
-    5- Janela de plantio
-    0- Sair
-    """)
+    print("""
+╔══════════════════════════════════╗
+║         TERRAVIS - MENU          ║
+╠══════════════════════════════════╣
+║  [1]  Informacoes sobre o sistema║
+║  [2]  Calcular NDVI              ║
+║  [3]  Previsao de queimadas      ║
+║  [4]  Previsao de enchentes      ║
+║  [5]  Janela de plantio          ║
+╠══════════════════════════════════╣
+║  [0]  Sair                       ║
+╚══════════════════════════════════╝
+""")
 
-
+def iniciar():
+    msg = """╔══════════════════════════════╗
+║       BEM-VINDO AO           ║
+║         TERRAVIS             ║
+║  Inteligencia orbital para   ║
+║      o campo brasileiro      ║
+╠══════════════════════════════╣
+║  [1] Entrar                  ║
+║  [2] Sair                    ║
+╚══════════════════════════════╝
+"""
+    return msg
 def login ():
-    print("Boas-vindas!\n"
-          "entre com o seu login\n")
-    email = input("Insira seu email: ")
-    senha = input("Insira sua senha: ")
+    print("""╔══════════════════════════════════╗
+║         ACESSO AO SISTEMA        ║
+╠══════════════════════════════════╣
+║  Insira suas credenciais         ║
+║  para continuar                  ║
+╚══════════════════════════════════╝""")
+    email = input("Email : ")
+    senha = input("Senha : ")
     return email, senha
 
 
