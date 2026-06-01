@@ -27,15 +27,15 @@ def menuNdvi():
 ╚══════════════════════════════════╝
 """)
 
-def escolhaDeTalhao():
+def escolhaDeTalhao():         #Pega o nome do talhão
     talhao = input("nome do talhão: ")
     return talhao
 
 def opcaoNdvi():
-    talhao = escolhaDeTalhao()
+    talhao = escolhaDeTalhao()  #Pega o nome
     while True:
         menuNdvi()
-        opc = int(input("Opção: "))
+        opc = int(input("Opção: "))  # pega a opção e dependendo da escolha muda o valor das variáveis
         match opc:
             case 1:
                 estado = "Plantio recente (solo ainda exposto)"
@@ -81,7 +81,7 @@ def opcaoNdvi():
                 print("Opção inválida!")
 
 
-def calculoNvdi(red, nir):
+def calculoNvdi(red, nir):     #Faz o calculo do Nvdi de acordo com as variáveis red e nir
     # (NIR - RED) / (NIR + RED)
     ndvi = (nir - red) / (nir + red)
     if ndvi < 0.2:
@@ -97,7 +97,7 @@ def calculoNvdi(red, nir):
         alerta = "ÓTIMO"
         return ndvi, alerta
 
-def dadosNvdi(red, nir, nvdi, alerta, estado, talhao):
+def dadosNvdi(red, nir, nvdi, alerta, estado, talhao):  #Junta todas as variáveis em uma mensagem
     resultado = f"""== Resultado ==
 Talhao: {talhao.upper()}
 Estado: {estado}
@@ -107,14 +107,14 @@ NDVI calculado: {nvdi:.2f}
 STATUS: {alerta}\n"""
     return resultado
 
-def calcular():
+def calcular(): #Agrupa todas as funções para deixar a main limpa
     res = opcaoNdvi()
     dados = dadosNvdi(res[0], res[1], res[2], res[3], res[4], res[5])
     return dados
 #_________________________________________________________________________
 # 3- QUEIMADA
 
-def temperatura():
+def temperatura(): #pega o valor da temperatura
     while True:
         menu = """Informe a temperatura atual da regiao (°C): """
         temp = int(input(menu))
@@ -124,7 +124,7 @@ def temperatura():
             print("Temperatura inválida!\n A temperatura deve ser entre 0 e 60.")
 
 
-def velocidadeVento():
+def velocidadeVento(): #pega o valor da velocidade
     while True:
         menu = """Informe a intensidade do vento (km/h): """
         vento = int(input(menu))
@@ -133,7 +133,7 @@ def velocidadeVento():
         else:
             print("Vento inválido!\n O vento deve ser entre 0 e 120")
 
-def umidadeRelativa():
+def umidadeRelativa(): #pega o valor da umidade
     while True:
         menu = """Informe a umidade do ar (%): """
         umidade = int(input(menu))
@@ -143,14 +143,14 @@ def umidadeRelativa():
             print("Umidade inválida!\n A umidade deve ser entre 0 e 100")
 
 
-def chancesDeQueimada(temperatura, vento, umidade):
-    fatorTemp = temperatura / 50
+def chancesDeQueimada(temperatura, vento, umidade): #calcula a chance de ter uma queimada de
+    fatorTemp = temperatura / 50                    # acordo com a temperatura, vento e umidade
     fatorUmidade = (100 - umidade) / 100
     fatorVento = vento / 100
     indice = (fatorTemp * 0.35) + (fatorUmidade * 0.45) + (fatorVento * 0.20)
     return indice
 
-def classificacao(indice):
+def classificacao(indice):   #Pega o valor do indice da função chanceDeQueimda(), e verifica onde se encaixa
     if indice <= 0.29:
         risco = "Risco baixo (Sem necessidade de atenção)"
         return risco
@@ -164,7 +164,7 @@ def classificacao(indice):
         risco = "Risco crítico (Emergência)"
         return risco
 
-def prevQueimada():
+def prevQueimada(): #Junta todas as funções e retorna o alerta
     temp = temperatura()
     vento = velocidadeVento()
     umidade = umidadeRelativa()
@@ -179,7 +179,7 @@ def prevQueimada():
 # 4- ENCHENTES
 
 def nivelDoRio():
-    while True:
+    while True: #Verifica o nível do rio
         nivel = float(input("Informe a nivel do Rio em metros: "))
 
         if nivel >= 0 and nivel <= 10 :
@@ -200,7 +200,7 @@ def nivelDoRio():
         else:
             print("Valor inválido!")
 
-def precipitacao(nivelAtual):
+def precipitacao(nivelAtual): #pega o nivel atual e soma com a previsão de chuva, retornando um alerta para as próximas 24h
     while True:
         prec = int(input("Informe a precipitação prevista nas próximas 24h (mm): "))
         if prec >= 0 and prec <= 400 and nivelAtual != None:
@@ -221,7 +221,7 @@ def precipitacao(nivelAtual):
             print("Valor inválido!")
 
 
-def riscoEnchentes():
+def riscoEnchentes(): #Junta as funções e retorna uma mensagem final
     nivelEAviso = nivelDoRio() #Guarda a lista [nivel, aviso]
     if nivelEAviso != None:
         nivelAtual = nivelEAviso[0]
@@ -296,7 +296,7 @@ janelas = {   #dicionário para busca eficiente de valores, a escolha do diciona
         "norte":        [1, 2, 3],
     },
 }
-mesesNomes = {
+mesesNomes = { #dicionario para transformar números em meses
     1:  "Jan",
     2:  "Fev",
     3:  "Mar",
@@ -311,7 +311,7 @@ mesesNomes = {
     12: "Dez",
 }
 
-def infoDePlantio():
+def infoDePlantio(): #menu interativo para pegar o plantio
     while True:
         cultivo = int(input("""
 ╔══════════════════════════════════╗
@@ -349,7 +349,7 @@ def infoDePlantio():
 
 
 
-def infoRegiao():
+def infoRegiao(): #menu interativo para pegar a região
     while True:
         reg = int(input("""
 ╔══════════════════════════════════╗
@@ -381,7 +381,7 @@ def infoRegiao():
             print("Opcço inválida")
     return regiao
 
-def infoMeses():
+def infoMeses(): #Pega o número do mês atual e faz o cálculo do mês anterior e o mês posterior
     while True:
         mes = int(input("Informe o mês atual(1,2,3...,12): "))
         mesAnterior = mes - 1
@@ -398,7 +398,7 @@ def infoMeses():
             break
     return mes, mesAnterior, mesPosterior
 
-def avisoMeses(plant, regiao ,mesAnterior, mes, mesPosterior):
+def avisoMeses(plant, regiao ,mesAnterior, mes, mesPosterior): #verifica se o periodo é adequado para o plantio
     meses = janelas[plant][regiao]
     if len(meses) == 0:
         sts = "NÃO RECOMENDADO"
@@ -424,14 +424,12 @@ def avisoMeses(plant, regiao ,mesAnterior, mes, mesPosterior):
         aviso = "Fora do periodo ideal para o plantio."
     return aviso, sts
 
-def exibirInfo(plant, regiao, mes, aviso, status):
+def exibirInfo(plant, regiao, mes, aviso, status): #Função para mostrar a recomendação do plantio
     meses = janelas[plant][regiao]
     mesAtual = mesesNomes[mes]
     mesesN = []
     for m in meses:
         mesesN.append(mesesNomes[m])
-    # mesesN = str([meses[m] for m in meses])
-
 
     if status != "NÃO RECOMENDADO" :
         mensagem = f"""
@@ -462,7 +460,7 @@ def exibirInfo(plant, regiao, mes, aviso, status):
         ================================"""
     return mensagem
 
-def janelaDePlantio():
+def janelaDePlantio(): #Junta as funções e retorna apenas o aviso
     plantio = infoDePlantio()
     regiao = infoRegiao()
     meses = infoMeses()

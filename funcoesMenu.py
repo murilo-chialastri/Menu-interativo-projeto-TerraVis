@@ -1,4 +1,4 @@
-def menu ():
+def menu (): #menu utilizado no While da main
     print("""
 ╔══════════════════════════════════╗
 ║         TERRAVIS - MENU          ║
@@ -13,7 +13,7 @@ def menu ():
 ╚══════════════════════════════════╝
 """)
 
-def iniciar():
+def iniciar(): #Tela inicial do menu
     msg = """╔══════════════════════════════╗
 ║       BEM-VINDO AO           ║
 ║         TERRAVIS             ║
@@ -25,7 +25,8 @@ def iniciar():
 ╚══════════════════════════════╝
 """
     return msg
-def login ():
+
+def login (): #menu que pede senha e email
     print("""╔══════════════════════════════════╗
 ║         ACESSO AO SISTEMA        ║
 ╠══════════════════════════════════╣
@@ -37,7 +38,7 @@ def login ():
     return email, senha
 
 
-def loginValidacao (nome, senha):
+def loginValidacao (nome, senha): #verifica se o email tem "@" e senha tem mais de 3 caracteres
     if "@" in nome and len(senha) >= 3:
         return True
     else:
