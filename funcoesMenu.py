@@ -4,7 +4,7 @@ def menu ():
     2- Calcular NVDI
     3- Previsão de queimadas
     4- Previsão de enchentes
-    5-
+    5- Janela de plantio
     0- Sair
     """)
 

@@ -1,9 +1,9 @@
 import funcoesMenu
 import funcionalidades
-
+from funcionalidades import janelaDePlantio
 
 while(True):
-    lo = int(input("Fazer login (1)\n Sair (2)"))
+    lo = int(input("Fazer login (1)\nSair (2)"))
     if lo == 1:
         acesso = funcoesMenu.login()
         permissao = funcoesMenu.loginValidacao(acesso[0], acesso[1])
@@ -27,10 +27,13 @@ while(True):
                         previsaoEnchentes = funcionalidades.riscoEnchentes()
                         print(previsaoEnchentes)
                     case 5:
-                        print()
+                        janelaDePlantio = funcionalidades.janelaDePlantio()
+                        print(janelaDePlantio)
                     case 0:
                         print("Fechando programa...")
                         break
+                    case _:
+                        print("Opção inválida!")
 
         else:
             print("email ou senha inválido")

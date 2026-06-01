@@ -153,7 +153,10 @@ def prevQueimada():
     vento = velocidadeVento()
     umidade = umidadeRelativa()
     indice = chancesDeQueimada(temp, vento, umidade)
-    clas = classificacao(indice)
+    clas = f"""
+    ================================
+    {classificacao(indice)}
+    ================================"""
     return clas
 
 #_________________________________________________________________________
@@ -217,16 +220,18 @@ def riscoEnchentes():
             else:
                 situacao = "[ok] Situacao estavel. Sem mudancas previstas."
 
-            status = f"""\n== Situacao atual ==
-        Nivel do rio: {nivelAtual:.1f}m
-        Status: {avisoAtual}
+            status = f"""\n
+            ======== Situacao atual ========
+            Nivel do rio: {nivelAtual:.1f}m
+            Status: {avisoAtual}
         
-        == Projecao para as proximas 24h ==
-        Precipitacao prevista: {precip}mm
-        Nivel projetado: {nivelFinal:.1f}m
-        Status: {avisoFinal}
-        
-        {situacao}"""
+            = Projecao para as proximas 24h =
+            Precipitacao prevista: {precip}mm
+            Nivel projetado: {nivelFinal:.1f}m
+            Status: {avisoFinal}
+            
+            {situacao}
+            ================================"""
             return status
         else:
             print("A precipitação não foi informada corretamente!")
@@ -274,6 +279,20 @@ janelas = {   #dicionário para busca eficiente de valores, a escolha do diciona
         "norte":        [1, 2, 3],
     },
 }
+mesesNomes = {
+    1:  "Jan",
+    2:  "Fev",
+    3:  "Mar",
+    4:  "Abr",
+    5:  "Mai",
+    6:  "Jun",
+    7:  "Jul",
+    8:  "Ago",
+    9:  "Set",
+    10: "Out",
+    11: "Nov",
+    12: "Dez",
+}
 
 def infoDePlantio():
     while True:
@@ -285,22 +304,27 @@ def infoDePlantio():
                             "5- Algodao\n"))
         if cultivo == 1:
             plant = "soja"
-            break
+            return plant
+
         elif cultivo == 2:
             plant = "milho"
-            break
+            return plant
+
         elif cultivo == 3:
             plant = "trigo"
-            break
+            return plant
+
         elif cultivo == 4:
             plant = "feijao"
-            break
+            return plant
+
         elif cultivo == 5:
             plant = "algodao"
-            break
+            return plant
+
         else:
             print("Opção inválida")
-    return plant
+
 
 
 def infoRegiao():
@@ -330,4 +354,93 @@ def infoRegiao():
             print("Opcço inválida")
     return regiao
 
+def infoMeses():
+    while True:
+        mes = int(input("Informe o mês atual(1,2,3...,12): "))
+        mesAnterior = mes - 1
+        mesPosterior = mes + 1
+        if mes == 1:
+            mesAnterior = 12
+            break
+        elif mes == 12:
+            mesPosterior = 1
+            break
+        elif mes < 1 or mes > 12:
+            print("Mês inválido")
+        else:
+            break
+    return mes, mesAnterior, mesPosterior
 
+def avisoMeses(plant, regiao ,mesAnterior, mes, mesPosterior):
+    meses = janelas[plant][regiao]
+    if len(meses) == 0:
+        sts = "NÃO RECOMENDADO"
+        aviso = "Esta plantação não e recomendada para esta região."
+    elif mes in meses and mesAnterior in meses:
+        sts = "MOMENTO PERFEITO"
+        aviso = """Momento perfeito para o plantio!
+        (Plante agora)."""
+    elif mes in meses:
+        sts = "MOMENTO IDEAL"
+        aviso = """Momento ideal para o plantio!
+        (Plante agora)."""
+    elif not mes in meses and mesAnterior in meses:
+        sts = "EM BREVE"
+        aviso = """A janela de plantio está se aproximando.
+        (Prepare o solo e aguarde o próximo mês)."""
+    elif not mes in meses and mesPosterior in meses:
+        sts = "ATENÇÃO"
+        aviso = """A janela de plantio está se encerrando.
+        (Aguardar o próximo ciclo)"""
+    else:
+        sts = "FORA DA JANELA"
+        aviso = "Fora do periodo ideal para o plantio."
+    return aviso, sts
+
+def exibirInfo(plant, regiao, mes, aviso, status):
+    meses = janelas[plant][regiao]
+    mesAtual = mesesNomes[mes]
+    mesesN = []
+    for m in meses:
+        mesesN.append(mesesNomes[m])
+    # mesesN = str([meses[m] for m in meses])
+
+
+    if status != "NÃO RECOMENDADO" :
+        mensagem = f"""
+        ================================
+        JANELA DE PLANTIO - TERRAVIS
+        ================================
+        Cultura : {plant.upper()}
+        Regiao  : {regiao.upper()}
+        Mes atual: {mesAtual.upper()} ({mes})
+        
+        Status: {status}
+        
+        Recomendacao: {aviso}
+        
+        Meses recomendados: {", ".join(mesesN)}
+        ================================"""
+    else:
+        mensagem = f"""
+        ================================
+        JANELA DE PLANTIO - TERRAVIS
+        ================================
+        Cultura : {plant.upper()}
+        Regiao  : {regiao.upper()}
+        
+        Status: {status}
+        
+        Recomendacao: {aviso}
+        ================================"""
+    return mensagem
+
+def janelaDePlantio():
+    plantio = infoDePlantio()
+    regiao = infoRegiao()
+    meses = infoMeses()
+
+    alertas = avisoMeses(plantio, regiao, meses[0], meses[1], meses[2])
+    geral = exibirInfo(plantio, regiao, meses[1], alertas[0], alertas[1])
+
+    return geral
